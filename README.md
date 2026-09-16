@@ -29,6 +29,13 @@ validated 2026-09-16.
 | PCIe Gen2 x8 | pre-driver rescan (`cmp50hx-gen2-rescan`) + deferred retrain (`cmp50hx-gen2`) |
 | BAR1 P2P | aikitoria fork (built-in HAL routing + `p2pOverride=0x11`; no source patches) + static BAR1 + `RMForceStaticBar1=1` + `iommu=pt` — **verified 2.47 GB/s bidirectional, 0 mismatch** |
 
+### Measured workload impact (Qwen3.8-27B)
+
+Synthetic wins don't guarantee inference wins. On the actual Qwen3.8-27B workload, BAR1
+64 MiB → 32 GiB + P2P off → on moved decode by ~1 % and prefill by ~1–3 % — decode is
+compute-bound on the CMP 50HX (TU102, no tensor cores), so the PCIe link was never the
+bottleneck. Full before/after benchmark and methodology: [docs/BENCH-QWEN38.md](docs/BENCH-QWEN38.md).
+
 ## The path from scratch
 
 The full recipe is [docs/SETUP-ubuntu-24.04.md](docs/SETUP-ubuntu-24.04.md). Short version:
@@ -102,12 +109,14 @@ docs/
   tu102-xve-dxe-prepatch.md          DXE pre-pass internals
   ai100gb-rebar-p2p-hardrules.md     hard-won operational rules
   btc79x5-firmware-policy.md         CPU-unlock firmware policy
+  BENCH-QWEN38.md                     real-workload benchmark (before/after, conclusion)
 scripts/
   cmp50hx-gen2-rescan.sh             pre-driver rescan + retrain (deployed)
   cmp50hx-gen2-rescan.service
   cmp50hx-gen2                       deferred Gen2 retrain (fail-closed, deployed)
   cmp50hx-gen2.service
   p2p_benchmark.c                    P2P acceptance test (BW + integrity)
+  bench-qwen38.py                     llama-server prefill/decode benchmark
 ```
 
 ## Safety
