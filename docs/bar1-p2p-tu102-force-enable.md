@@ -34,17 +34,21 @@ The two extra patches from the bayley/cmpunlocker set are NOT needed on this bui
   configuration (static BAR1 enabled: override wins; static BAR1 absent: the
   `kbusIsPcieBar1P2PMappingSupported_HAL` check fails first).
 
-## The only remaining gate: static BAR1
+## The only remaining gate: static BAR1 (RESOLVED 2026-09-16)
 
 Full-FB BAR1 P2P is gated by static BAR1 covering the client-visible framebuffer
-(32 GiB for a 20 GiB CMP), gated by `RMPcieP2PType=1` + `RMForceStaticBar1=1`, with
-IOMMU passthrough (`iommu=pt`) so the peer DMA is not translated.
+(32 GiB for a 20 GiB CMP), gated by `RMForceStaticBar1=1` (NOT `RMPcieP2PType=1` — the
+fork already defaults `pcieP2PType=BAR1`), with IOMMU passthrough (`iommu=pt`) so the
+peer DMA is not translated.
 
-On BTC79X5 the XVE pre-pass delivers 16 GiB (selector 8) reliably but selector 9
-(32 GiB) wedges POST — the host never returns. So the driver recipe alone is not
-sufficient on that board: the 32 GiB firmware aperture is the actual blocker, and it is
-a POST/firmware problem, not a driver problem. Do not chase driver fixes when the
-aperture cannot be brought up.
+On BTC79X5 the XVE pre-pass delivers 16 GiB (selector 8) reliably. Selector 9 (32 GiB)
+originally wedged POST — but the root cause was NOT the selector code, it was the default
+64 GiB MMIOH pool (2×32 GiB cards need ~96 GiB of contiguous prefetchable window, and the
+second card landed outside the 64 GiB pool). Enlarging MMIOH 64→256 GiB (1-byte code
+patch, `firmware/PATCH_MMIOH_256G.md`) resolves it: selector 9 boots with
+`Region 1 [size=32G]` on both cards and full 20480 MiB VRAM. Verified 2026-09-16: direct
+P2P `cudaMemcpyPeerAsync` 2.47 GB/s bidirectional, 0 integrity mismatches, host RAM clean.
+
 
 ## Why the mailbox fallback corrupts RAM (and how to avoid it)
 

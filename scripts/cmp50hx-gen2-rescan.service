@@ -1,0 +1,13 @@
+[Unit]
+Description=CMP 50HX PCIe Gen2 enable (pre-driver rescan + retrain)
+After=sysinit.target
+Before=multi-user.target llama-qwen.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/cmp50hx-gen2-rescan.sh
+TimeoutStartSec=90
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
