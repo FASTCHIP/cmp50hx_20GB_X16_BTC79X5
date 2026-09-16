@@ -60,8 +60,9 @@ MMIOH не при чём. До этого шага не делать трети�
 `sudo systemctl stop cmp50hx-gen2-rescan && sudo systemctl disable cmp50hx-gen2-rescan` ДО ребута; после загрузки — `enable --now`, дождаться `is-active=active`, иначе линк остаётся Gen1. Игнорирование = shutdown виснет на 15–20 минут (хост лежит).
 
 ## 4. P2P на этих картах небезопасен
-- Форк aikitoria на TU102 уходит в MAILBOX-путь; при `iommu=pt` это привело к записи битого DMA в RAM хоста: ассерты `remoteWMBoxLocalAddr != ~0ULL @ kern_bus_gm200.c:89`, затем segfault/GPF в llama-server, python3, sshd и systemd[1], журнал повреждён. Признак — немедленный стоп и откат.
-- BAR1-путь требует `RMForceStaticBar1` + статической BAR1 ≥ client-visible FB (20 ГиБ), т.е. 32 ГиБ → на этой плате недостижимо (см. п.2). Значит рабочий P2P здесь недостижим; не включать без доказательства на одной карте.
+- Форк aikitoria на TU102 при ОТСУТСТВИИ статической BAR1 уходит в MAILBOX-путь (fallback): `pcieP2PType=BAR1`, но BAR1 не включена → `kbusIsPcieBar1P2PMappingSupported_HAL` = FALSE → connectivity деградирует до PCIE_PROPRIETARY (mailbox) → mailbox запускается с незарегистрированным peer-состоянием (пре-регистрация мертва: `gpumgrGetGpuLinkCount` ≡ 0 сворачивает `_kbusInitP2P_GM107`) → при `iommu=pt` битый DMA пишет в RAM хоста: ассерты `remoteWMBoxLocalAddr != ~0ULL @ kern_bus_gm200.c:89`, затем segfault/GPF в llama-server, python3, sshd и systemd[1], журнал повреждён. Признак — немедленный стоп и откат.
+- Порча НЕ неизбежна: включить статическую BAR1 ДО загрузки форка → драйвер выбирает PCIE_BAR1 и mailbox-fallback не трогает. Драйверная часть полностью готова в самом форке (HAL-роутинг на GH100 + `pcieP2PType=BAR1` + `p2pOverride=0x11`): патчи 0013 (mailbox-skip — no-op) и 0015 (read-cap — избыточен: `p2pOverride=0x11` форсит read+write cap ДО вызова read-cap-функции) НЕ нужны.
+- BAR1-путь требует `RMForceStaticBar1` + статической BAR1 ≥ client-visible FB (20 ГиБ), т.е. 32 ГиБ → на этой плате недостижимо (см. п.2). Значит рабочий P2P здесь недостижим; не включать без доказательства на одной карте. Единственный оставшийся блокер — firmware-апертура 32 ГиБ (selector 9 + MMIOH 128 ГиБ), а не драйвер.
 - Форк требует `iommu=pt` (сейчас `Translated`), у root-портов `ACSCtl: ReqRedir+`; группы карт разные (23/24).
 
 ## 5. Прошивка (flashrom) — проверенная процедура

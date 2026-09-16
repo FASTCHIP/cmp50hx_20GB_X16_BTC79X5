@@ -23,7 +23,7 @@ risk — flashing a BIOS can brick a board. Always back up your current flash fi
 | 128 GiB MMIOH | Setup EFI var (no reflash) — fits 2× 32 GiB |
 | 256 GiB MMIOH | 1-byte code patch — fits 4× 32 GiB (224 GiB) |
 | PCIe Gen2 x8 | deferred retrain service (`cmp50hx-gen2-after-gsp`) |
-| BAR1 P2P | driver patches (0013/0015) + static BAR1 + `iommu=pt` |
+| BAR1 P2P | aikitoria fork (built-in HAL routing + `p2pOverride=0x11`; no source patches) + static BAR1 + `iommu=pt` |
 
 ## The path from scratch
 
@@ -60,10 +60,24 @@ breaks the unlock chain). Cards otherwise stay at Gen1 x8.
 
 ### 5. BAR1 P2P (docs/bar1-p2p-tu102-force-enable.md)
 
-Pre-Hopper CMP cards need four things: route the default HAL to the GH100 BAR1-P2P
-implementations, skip the mailbox peer pre-registration, force the read cap for CMP
-device IDs, and a static BAR1 ≥ client-visible FB. The mailbox fallback corrupts host
-RAM — never force it, and keep IOMMU translated while testing.
+The aikitoria 610.43.03-p2p fork already carries everything driver-side: it routes the
+default (pre-Hopper) HAL to the GH100 BAR1-P2P implementations, defaults
+`pcieP2PType=BAR1`, and sets `p2pOverride=0x11` (READ+WRITE enable) in `kernel_bif.c`.
+The two extra patches from the bayley/cmpunlocker set are NOT needed on this build:
+
+- **0013 (skip mailbox peer pre-registration) is a compile-time no-op** —
+  `gpumgrGetGpuLinkCount` is `#define ... ((NvU32) 0)`, so `_kbusInitP2P_GM107` is
+  constant-folded dead and `peerNumberMask` is already clear.
+- **0015 (force the read cap) is redundant** — `p2pOverride=0x11` already decodes to
+  READ_ENABLE+WRITE_ENABLE, and `_kp2pCapsCheckStatusOverridesForPcie` runs BEFORE
+  `_p2pCapsGetHostSystemStatusOverPcieBar1`, so the read cap is already forced and the
+  0015 target function is never reached.
+
+So the ONLY remaining gate is a static BAR1 ≥ client-visible FB (32 GiB for 20 GiB
+VRAM) — a firmware/POST problem, not a driver problem. The mailbox fallback corrupts
+host RAM (it is reached when `pcieP2PType=BAR1` but static BAR1 is absent, and
+`iommu=pt` turns the bogus DMA into silent corruption), so enable static BAR1 before
+loading the fork and keep IOMMU translated while testing.
 
 ## Repository layout
 
