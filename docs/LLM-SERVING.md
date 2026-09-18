@@ -23,8 +23,10 @@ units or processes left, port 8091 free, both GPUs at 0 MiB.
 
 Rollback / reference material:
 
-- Backup on the host: `~/vllm-removal-backup-20260918` — unit file, all
-  `serve-*.sh` variants, bench scripts, `vllm.pid`.
+- Backup on the local workstation (NOT on this host):
+  `~/vllm-removal-backup-20260918` — unit file, all `serve-*.sh` variants,
+  bench scripts, `vllm.pid`, plus the incident logs `vllm-qwen-journal.txt`
+  and `stop-vllm.txt` (copied from `~/cmp50-gpu1-drop-2026-09-18/`).
 - The complete verified vLLM configuration as it read before removal is in
   this file's git history (commit `8fb4fbf`); benchmark numbers:
   [BENCH-QWEN38.md](BENCH-QWEN38.md).
