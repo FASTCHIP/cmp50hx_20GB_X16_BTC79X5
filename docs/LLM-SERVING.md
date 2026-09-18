@@ -1,8 +1,8 @@
-# LLM Serving — vLLM & llama.cpp on 2× CMP 50HX
+# LLM Serving — llama.cpp on 2× CMP 50HX
 
-Verified serving configurations for the production 2× CMP 50HX (20 GiB) host.
-vLLM is production and owns the GPUs; the llama.cpp units are installed but
-disabled. Validated September 2026.
+Serving documentation for the production 2× CMP 50HX (20 GiB) host.
+Updated 2026-09-18: **vLLM was fully removed** (see *Removed: vLLM* below);
+the llama.cpp units are installed but disabled — enable one to serve.
 
 ## Host constraints that shape these configs
 
@@ -13,69 +13,27 @@ disabled. Validated September 2026.
   `cmp50hx-gen2` → `cmp-idle-governor`, see [SETUP-ubuntu-24.04.md](SETUP-ubuntu-24.04.md));
   serving units MUST order after it.
 
-## vLLM — production (`vllm-qwen.service`, port 8091)
+## Removed: vLLM (2026-09-18)
 
-**Version: vLLM 0.29.0** in a dedicated venv (`~/vllm-qwen38/venv`), started
-via `~/vllm-qwen38/serve-safe.sh`. Model: Qwen3.8-27B-AWQ, served as
-`Qwen3.8-27B`, listening on `0.0.0.0:8091`.
+vLLM 0.29.0 (`vllm-qwen.service`, port 8091, Qwen3.8-27B-AWQ) was uninstalled
+from the host: the service was stopped and disabled, the unit file deleted,
+and `~/vllm-qwen38` (venv + serve/bench scripts), `/opt/vllm-fork`,
+`~/.cache/vllm` and `~/vllm-8092-cmdline.txt` removed. Verified: no vLLM
+units or processes left, port 8091 free, both GPUs at 0 MiB.
 
-```
-vllm serve $MODEL_DIR              # AWQ snapshot under /mnt/usbsata/models
-  --served-model-name Qwen3.8-27B
-  --host 0.0.0.0 --port 8091
-  --tensor-parallel-size 2
-  --dtype float16
-  --max-model-len 131072
-  --gpu-memory-utilization 0.90
-  --kv-cache-dtype float16
-  --enable-prefix-caching
-  --enable-chunked-prefill
-  --max-num-batched-tokens 16384
-  --max-num-seqs 16
-  --long-prefill-token-threshold 16384
-  --enable-auto-tool-choice
-  --tool-call-parser qwen3_xml
-  --reasoning-parser qwen3
-  --disable-custom-all-reduce
-```
+Rollback / reference material:
 
-(The exact executable line and `$MODEL_DIR` live in `serve-safe.sh` on the host.)
-
-Why these flags:
-
-| Flag | Reason |
-|---|---|
-| `--tensor-parallel-size 2` | both cards pool ~40 GiB for one model |
-| `--dtype float16` | fastest dequant path for AWQ on Turing (sm_75) |
-| `--max-model-len 131072` | full 128K context; fp16 KV fits at 0.90 util |
-| `--enable-prefix-caching` | large reuse win for system-prompt / agent traffic |
-| `--enable-chunked-prefill` + `--max-num-batched-tokens 16384` | smooth long prefills, keep decode latency stable |
-| `--long-prefill-token-threshold 16384` | let long prompts take the chunked path |
-| `--max-num-seqs 16` | matches the KV budget on 20 GiB cards |
-| `--disable-custom-all-reduce` | custom all-reduce kernels are unreliable on these cards; the NCCL path is stable |
-
-**Mandatory env — without these the engine dies during model load.** It looks
-like a crash, not an OOM: slow driver + USB-SATA exceed the default timeouts.
-
-```
-VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS=1800
-VLLM_ENGINE_ITERATION_TIMEOUT_S=1800
-```
-
-Unit wiring: `Restart=on-failure`, `RestartSec=15`, ordered after the unlock
-chain:
-
-```ini
-[Unit]
-Requires=cmp50hx-gen2-rescan.service
-Wants=cmp50hx-gen2.service
-After=cmp50hx-gen2.service
-```
+- Backup on the host: `~/vllm-removal-backup-20260918` — unit file, all
+  `serve-*.sh` variants, bench scripts, `vllm.pid`.
+- The complete verified vLLM configuration as it read before removal is in
+  this file's git history (commit `8fb4fbf`); benchmark numbers:
+  [BENCH-QWEN38.md](BENCH-QWEN38.md).
+- Model weights `Qwen3.8-27B-AWQ` (21 GiB) are still under
+  `/mnt/usbsata/models/` — remove separately if no longer wanted.
 
 ## llama.cpp — installed, disabled (`llama-qwen` :8081, `llama-ornith` :8082)
 
-Both units are disabled while vLLM is production; the configs are kept ready
-to re-enable.
+Both units are disabled; with vLLM gone this is the available serving stack.
 
 ### `llama-qwen.service` — port 8081
 
@@ -116,27 +74,24 @@ Both units carry a historical `Requires=docker.service`.
 
 ## Post-reboot verification
 
-1. `systemctl status cmp50hx-gen2-rescan cmp50hx-gen2 cmp-idle-governor vllm-qwen` — all active.
+1. `systemctl status cmp50hx-gen2-rescan cmp50hx-gen2 cmp-idle-governor` — all active.
 2. `nvidia-smi` lists both cards; link speed ≥ 5.0 GT/s on both.
-3. `ss -tln | grep 8091`, then `curl -s http://127.0.0.1:8091/v1/models` →
-   `Qwen3.8-27B`. Allow 1–2 min of engine init after unit start (~30 s from
-   boot in practice).
+3. If a llama.cpp unit was enabled: `ss -tln | grep 8081` (or `8082`), then
+   `curl -s http://127.0.0.1:8081/v1/models` — allow extra time for the first
+   multi-GB model load from USB-SATA. (vLLM's port 8091 no longer exists.)
 
 ## Troubleshooting
 
 - **Link stuck at Gen1 x4** — read TLS with `setpci -s <bdf> CAP_EXP+30.W`;
   retrain only once TLS reads 2, earlier retrains fail because the registers
   are still locked (handled by `cmp50hx-gen2`).
-- **vLLM dies during model load** — the 1800 s env timeouts are missing; it
-  is not an OOM.
 - **GPU1 drops** — evidence from the 2026-09-18 incident (dmesg, journals,
   nvidia bug report) is in `~/cmp50-gpu1-drop-2026-09-18/` on the host.
 - `postgresql@16-main` sitting in failed state is chronic on this host and
   unrelated to LLM serving.
 
-## Benchmarking / tuning
+## Benchmarking
 
-Never restart prod in place to test a change: run one-delta variants on a
-separate unit/port and health-gate before measuring. Methodology and
-before/after numbers: [BENCH-QWEN38.md](BENCH-QWEN38.md); benchmark script:
-[`scripts/bench-qwen38.py`](../scripts/bench-qwen38.py).
+[BENCH-QWEN38.md](BENCH-QWEN38.md) holds historical vLLM benchmark numbers
+(collected before the 2026-09-18 removal) plus the methodology; benchmark
+script: [`scripts/bench-qwen38.py`](../scripts/bench-qwen38.py).
