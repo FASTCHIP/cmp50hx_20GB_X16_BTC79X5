@@ -1,0 +1,1 @@
+{"label": "B0_explicit-defaults", "rep": 1, "started_epoch": 1789931071.2783215, "elapsed_s": 369.7, "usage": {"completion_tokens": 512, "prompt_tokens": 128067, "total_tokens": 128579, "prompt_tokens_details": {"cached_tokens": 0}}, "finish_reason": "length", "content_len": 512}

@@ -1,0 +1,1 @@
+{"label": "V4_layer-split", "rep": 2, "started_epoch": 1789936558.8212981, "elapsed_s": 270.844, "usage": {"completion_tokens": 512, "prompt_tokens": 128066, "total_tokens": 128578, "prompt_tokens_details": {"cached_tokens": 0}}, "finish_reason": "length", "content_len": 512}

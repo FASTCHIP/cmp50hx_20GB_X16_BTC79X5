@@ -1,0 +1,26 @@
+[Unit]
+Description=Qwen3.8 llama.cpp inference server (verybigbadboy fork)
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User=fastchip
+Group=fastchip
+WorkingDirectory=/home/fastchip/llama.cpp-nccl-sm75-exact-snb/bin
+Environment=CUDA_VISIBLE_DEVICES=0,1,2
+Environment=GGML_CUDA_GRAPH_OPT=1
+Environment=NCCL_P2P_DISABLE=0
+Environment=NCCL_P2P_LEVEL=PHB
+Environment=LD_LIBRARY_PATH=/home/fastchip/llama.cpp-nccl-sm75-exact-snb/bin:/home/fastchip/llama.cpp-nccl-sm75-exact-snb/lib:/usr/local/cuda-12.8/lib64
+ExecStart=/home/fastchip/llama.cpp-nccl-sm75-exact-snb/bin/llama-server --model /mnt/usbsata/models/Qwen3.8-27B-UD-Q4_K_XL.gguf --alias Qwen3.8-27B --mmproj /mnt/usbsata/models/mmproj-Qwen3.8-27B-Q8_0.gguf --mmproj-offload --host 0.0.0.0 --port 8081 --parallel 1 --ctx-size 262144 --kv-unified --kv-unified-per-slot 262144 --temp 0.6 --top-p 0.95 --top-k 20 --min-p 0 --presence-penalty 0.0 --repeat-penalty 1.0 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --cache-ram 16384 --gpu-layers 99 --split-mode tensor --tensor-split 1,1,1 --reasoning-effort low --cache-disk /mnt/usbsata/models/kvcache --cache-disk-max 102400 --spec-type draft-dflash --spec-draft-n-max 7 --model-draft /mnt/usbsata/models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf --api-key-file /etc/llama-server.api-key
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+SendSIGKILL=yes
+KillMode=mixed
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

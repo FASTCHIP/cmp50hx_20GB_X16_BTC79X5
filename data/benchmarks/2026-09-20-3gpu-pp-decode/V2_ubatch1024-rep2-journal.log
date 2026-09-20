@@ -1,0 +1,135 @@
+8.49.411.057 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = 24397679163
+8.49.411.066 I slot  prompt_save: id  0 | task -1 | prompt cache save start (tokens = 128581)
+9.03.992.262 I slot  prompt_save: id  0 | task -1 | prompt cache save end (ok = 1, gpu_read = 13897 ms, flush = 1 ms, total = 14581 ms)
+9.03.992.278 I slot  prompt_load: id  0 | task -1 | prompt cache load start
+9.03.992.298 I slot  prompt_load: id  0 | task -1 | prompt cache load end (ok = 1, took 0 ms)
+9.03.992.751 I slot launch_slot_: id  0 | task 131 | processing task, is_child = 0
+9.03.993.102 I srv  update_slots: unified kv: (128581) used from 262144
+9.08.103.770 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =   2048, progress = 0.02, t =   3.14 s / 651.90 tokens per second
+9.12.316.009 I srv  update_slots: unified kv: (4096) used from 262144
+9.12.316.044 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =   4096, progress = 0.03, t =   6.39 s / 640.69 tokens per second
+9.16.217.328 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =   6144, progress = 0.05, t =  10.43 s / 589.17 tokens per second
+9.20.503.010 I srv  update_slots: unified kv: (8192) used from 262144
+9.20.503.040 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =   8192, progress = 0.06, t =  14.56 s / 562.68 tokens per second
+9.24.833.382 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  10240, progress = 0.08, t =  18.87 s / 542.58 tokens per second
+9.29.208.653 I srv  update_slots: unified kv: (12288) used from 262144
+9.29.208.671 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  12288, progress = 0.10, t =  23.23 s / 528.88 tokens per second
+9.33.633.431 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  14336, progress = 0.11, t =  27.64 s / 518.68 tokens per second
+9.38.113.322 I srv  update_slots: unified kv: (16384) used from 262144
+9.38.113.340 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  16384, progress = 0.13, t =  32.10 s / 510.42 tokens per second
+9.42.635.904 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  18432, progress = 0.14, t =  36.61 s / 503.51 tokens per second
+9.47.193.960 I srv  update_slots: unified kv: (20480) used from 262144
+9.47.193.997 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  20480, progress = 0.16, t =  41.16 s / 497.58 tokens per second
+9.51.800.111 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  22528, progress = 0.18, t =  45.75 s / 492.43 tokens per second
+9.56.450.397 I srv  update_slots: unified kv: (24576) used from 262144
+9.56.450.415 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  24576, progress = 0.19, t =  50.38 s / 487.78 tokens per second
+10.01.171.845 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  26624, progress = 0.21, t =  55.07 s / 483.43 tokens per second
+10.05.926.611 I srv  update_slots: unified kv: (28672) used from 262144
+10.05.926.629 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  28672, progress = 0.22, t =  59.82 s / 479.28 tokens per second
+10.10.721.940 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  30720, progress = 0.24, t =  64.61 s / 475.50 tokens per second
+10.15.573.887 I srv  update_slots: unified kv: (32768) used from 262144
+10.15.573.905 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  32768, progress = 0.26, t =  69.43 s / 471.93 tokens per second
+10.20.468.582 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  34816, progress = 0.27, t =  74.32 s / 468.48 tokens per second
+10.25.414.328 I srv  update_slots: unified kv: (36864) used from 262144
+10.25.414.347 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  36864, progress = 0.29, t =  79.24 s / 465.21 tokens per second
+10.30.406.697 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  38912, progress = 0.30, t =  84.22 s / 462.03 tokens per second
+10.35.446.156 I srv  update_slots: unified kv: (40960) used from 262144
+10.35.446.194 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  40960, progress = 0.32, t =  89.24 s / 458.98 tokens per second
+10.40.542.115 I srv  update_slots: unified kv: (43008) used from 262144
+10.40.542.133 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  43008, progress = 0.34, t =  94.31 s / 456.02 tokens per second
+10.45.679.571 I srv  update_slots: unified kv: (45056) used from 262144
+10.45.679.589 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  45056, progress = 0.35, t =  99.44 s / 453.09 tokens per second
+10.50.866.329 I srv  update_slots: unified kv: (47104) used from 262144
+10.50.866.348 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  47104, progress = 0.37, t = 104.61 s / 450.28 tokens per second
+10.56.112.339 I srv  update_slots: unified kv: (49152) used from 262144
+10.56.112.357 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  49152, progress = 0.38, t = 109.83 s / 447.54 tokens per second
+11.01.403.389 I srv  update_slots: unified kv: (51200) used from 262144
+11.01.403.407 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  51200, progress = 0.40, t = 115.10 s / 444.82 tokens per second
+11.06.743.671 I srv  update_slots: unified kv: (53248) used from 262144
+11.06.743.690 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  53248, progress = 0.42, t = 120.43 s / 442.15 tokens per second
+11.12.129.569 I srv  update_slots: unified kv: (55296) used from 262144
+11.12.129.588 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  55296, progress = 0.43, t = 125.80 s / 439.55 tokens per second
+11.17.565.079 I srv  update_slots: unified kv: (57344) used from 262144
+11.17.565.100 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  57344, progress = 0.45, t = 131.22 s / 437.02 tokens per second
+11.23.056.270 I srv  update_slots: unified kv: (59392) used from 262144
+11.23.056.288 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  59392, progress = 0.46, t = 136.69 s / 434.50 tokens per second
+11.28.589.855 I srv  update_slots: unified kv: (61440) used from 262144
+11.28.589.873 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  61440, progress = 0.48, t = 142.21 s / 432.04 tokens per second
+11.34.188.399 I srv  update_slots: unified kv: (63488) used from 262144
+11.34.188.415 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  63488, progress = 0.50, t = 147.78 s / 429.61 tokens per second
+11.39.838.421 I srv  update_slots: unified kv: (65536) used from 262144
+11.39.838.439 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  65536, progress = 0.51, t = 153.41 s / 427.20 tokens per second
+11.45.530.447 I srv  update_slots: unified kv: (67584) used from 262144
+11.45.530.466 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  67584, progress = 0.53, t = 159.09 s / 424.82 tokens per second
+11.51.270.616 I srv  update_slots: unified kv: (69632) used from 262144
+11.51.270.633 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  69632, progress = 0.54, t = 164.81 s / 422.49 tokens per second
+11.57.064.199 I srv  update_slots: unified kv: (71680) used from 262144
+11.57.064.483 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  71680, progress = 0.56, t = 170.58 s / 420.20 tokens per second
+12.02.917.368 I srv  update_slots: unified kv: (73728) used from 262144
+12.02.917.387 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  73728, progress = 0.58, t = 176.41 s / 417.93 tokens per second
+12.08.800.767 I srv  update_slots: unified kv: (75776) used from 262144
+12.08.800.785 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  75776, progress = 0.59, t = 182.30 s / 415.68 tokens per second
+12.14.750.827 I srv  update_slots: unified kv: (77824) used from 262144
+12.14.750.845 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  77824, progress = 0.61, t = 188.21 s / 413.49 tokens per second
+12.20.745.831 I srv  update_slots: unified kv: (79872) used from 262144
+12.20.745.849 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  79872, progress = 0.62, t = 194.20 s / 411.29 tokens per second
+12.26.794.903 I srv  update_slots: unified kv: (81920) used from 262144
+12.26.794.919 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  81920, progress = 0.64, t = 200.22 s / 409.15 tokens per second
+12.32.892.528 I srv  update_slots: unified kv: (83968) used from 262144
+12.32.892.547 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  83968, progress = 0.66, t = 206.31 s / 407.00 tokens per second
+12.39.050.376 I srv  update_slots: unified kv: (86016) used from 262144
+12.39.050.394 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  86016, progress = 0.67, t = 212.44 s / 404.90 tokens per second
+12.45.254.081 I srv  update_slots: unified kv: (88064) used from 262144
+12.45.254.099 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  88064, progress = 0.69, t = 218.63 s / 402.80 tokens per second
+12.51.511.939 I srv  update_slots: unified kv: (90112) used from 262144
+12.51.511.958 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  90112, progress = 0.70, t = 224.87 s / 400.73 tokens per second
+12.57.824.038 I srv  update_slots: unified kv: (92160) used from 262144
+12.57.824.056 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  92160, progress = 0.72, t = 231.16 s / 398.69 tokens per second
+13.04.193.417 I srv  update_slots: unified kv: (94208) used from 262144
+13.04.193.435 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  94208, progress = 0.74, t = 237.50 s / 396.67 tokens per second
+13.10.613.944 I srv  update_slots: unified kv: (96256) used from 262144
+13.10.613.962 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  96256, progress = 0.75, t = 243.91 s / 394.64 tokens per second
+13.17.080.045 I srv  update_slots: unified kv: (98304) used from 262144
+13.17.080.063 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens =  98304, progress = 0.77, t = 250.36 s / 392.65 tokens per second
+13.23.594.525 I srv  update_slots: unified kv: (100352) used from 262144
+13.23.594.543 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 100352, progress = 0.78, t = 256.86 s / 390.69 tokens per second
+13.30.161.451 I srv  update_slots: unified kv: (102400) used from 262144
+13.30.161.488 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 102400, progress = 0.80, t = 263.41 s / 388.75 tokens per second
+13.36.779.624 I srv  update_slots: unified kv: (104448) used from 262144
+13.36.779.642 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 104448, progress = 0.82, t = 270.00 s / 386.84 tokens per second
+13.43.452.292 I srv  update_slots: unified kv: (106496) used from 262144
+13.43.452.310 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 106496, progress = 0.83, t = 276.66 s / 384.94 tokens per second
+13.50.190.175 I srv  update_slots: unified kv: (108544) used from 262144
+13.50.190.193 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 108544, progress = 0.85, t = 283.36 s / 383.05 tokens per second
+13.56.960.860 I srv  update_slots: unified kv: (110592) used from 262144
+13.56.960.877 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 110592, progress = 0.86, t = 290.12 s / 381.19 tokens per second
+14.03.777.425 I srv  update_slots: unified kv: (112640) used from 262144
+14.03.777.443 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 112640, progress = 0.88, t = 296.93 s / 379.35 tokens per second
+14.10.641.079 I srv  update_slots: unified kv: (114688) used from 262144
+14.10.641.097 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 114688, progress = 0.90, t = 303.78 s / 377.54 tokens per second
+14.17.574.831 I srv  update_slots: unified kv: (116736) used from 262144
+14.17.574.848 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 116736, progress = 0.91, t = 310.68 s / 375.74 tokens per second
+14.24.536.489 I srv  update_slots: unified kv: (118784) used from 262144
+14.24.536.507 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 118784, progress = 0.93, t = 317.64 s / 373.96 tokens per second
+14.31.551.115 I srv  update_slots: unified kv: (120832) used from 262144
+14.31.551.133 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 120832, progress = 0.94, t = 324.63 s / 372.21 tokens per second
+14.38.634.491 I srv  update_slots: unified kv: (122880) used from 262144
+14.38.634.509 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 122880, progress = 0.96, t = 331.69 s / 370.47 tokens per second
+14.45.753.606 I srv  update_slots: unified kv: (124928) used from 262144
+14.45.753.624 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 124928, progress = 0.98, t = 338.79 s / 368.74 tokens per second
+14.52.930.351 I srv  update_slots: unified kv: (126976) used from 262144
+14.52.930.369 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 126976, progress = 0.99, t = 345.95 s / 367.03 tokens per second
+14.53.349.723 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 127042, progress = 0.99, t = 349.24 s / 363.76 tokens per second
+14.57.284.552 I slot print_timing: id  0 | task 131 | prompt processing, n_tokens = 128066, progress = 1.00, t = 350.49 s / 365.39 tokens per second
+14.58.386.113 I srv  update_slots: unified kv: (128070) used from 262144
+15.01.492.672 I slot print_timing: id  0 | task 131 | n_gen =    169, tg =  54.09 t/s, tg_3s =  54.40 t/s
+15.03.444.301 I srv  update_slots: unified kv: (128342) used from 262144
+15.04.587.239 I slot print_timing: id  0 | task 131 | n_gen =    337, tg =  54.19 t/s, tg_3s =  54.29 t/s
+15.07.650.781 I slot print_timing: id  0 | task 131 | n_gen =    505, tg =  54.40 t/s, tg_3s =  54.84 t/s
+15.07.874.724 I slot print_timing: id  0 | task 131 | prompt eval time =  354392.96 ms / 128070 tokens (    2.77 ms per token,   361.38 tokens per second)
+15.07.874.734 I slot print_timing: id  0 | task 131 |        eval time =    9487.99 ms /   512 tokens (   18.57 ms per token,    53.86 tokens per second)
+15.07.874.738 I slot print_timing: id  0 | task 131 |       total time =  363880.94 ms / 128582 tokens
+15.07.874.741 I slot print_timing: id  0 | task 131 |    graphs reused =        120
+15.07.874.752 I slot print_timing: id  0 | task 131 | draft acceptance = 1.00000 (  447 accepted /   447 generated), mean len =  7.98
+15.07.874.793 I srv  send_final_r: req 131: prompt=128070 tok, prompt_ms=354393.0, gen_ms=9488.0, gen_tok=512
+15.07.880.130 I slot      release: id  0 | task 131 | stop processing: n_tokens = 128581, truncated = 0

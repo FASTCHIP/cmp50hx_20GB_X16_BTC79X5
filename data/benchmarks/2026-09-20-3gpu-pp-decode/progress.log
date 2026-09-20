@@ -1,0 +1,25 @@
+variant=B0_explicit-defaults begin=2026-09-20T19:01:49+00:00
+variant=B0_explicit-defaults rep=1 begin=2026-09-20T19:04:31+00:00
+variant=B0_explicit-defaults rep=2 begin=2026-09-20T19:10:43+00:00
+variant=B0_explicit-defaults rep=3 begin=2026-09-20T19:17:08+00:00
+variant=B0_explicit-defaults end=2026-09-20T19:23:33+00:00
+variant=V1_batch4096 begin=2026-09-20T19:23:33+00:00
+variant=V1_batch4096 rep=1 begin=2026-09-20T19:26:25+00:00
+variant=V1_batch4096 rep=2 begin=2026-09-20T19:32:36+00:00
+variant=V1_batch4096 rep=3 begin=2026-09-20T19:39:00+00:00
+variant=V1_batch4096 end=2026-09-20T19:45:24+00:00
+variant=V2_ubatch1024 begin=2026-09-20T19:45:24+00:00
+variant=V2_ubatch1024 rep=1 begin=2026-09-20T19:48:11+00:00
+variant=V2_ubatch1024 rep=2 begin=2026-09-20T19:54:20+00:00
+variant=V2_ubatch1024 rep=3 begin=2026-09-20T20:00:41+00:00
+variant=V2_ubatch1024 end=2026-09-20T20:07:03+00:00
+variant=V3_threads_batch10 begin=2026-09-20T20:07:03+00:00
+variant=V3_threads_batch10 rep=1 begin=2026-09-20T20:09:53+00:00
+variant=V3_threads_batch10 rep=2 begin=2026-09-20T20:16:05+00:00
+variant=V3_threads_batch10 rep=3 begin=2026-09-20T20:22:31+00:00
+variant=V3_threads_batch10 end=2026-09-20T20:28:56+00:00
+variant=V4_layer-split begin=2026-09-20T20:28:56+00:00
+variant=V4_layer-split rep=1 begin=2026-09-20T20:31:38+00:00
+variant=V4_layer-split rep=2 begin=2026-09-20T20:35:58+00:00
+variant=V4_layer-split rep=3 begin=2026-09-20T20:40:31+00:00
+variant=V4_layer-split end=2026-09-20T20:45:04+00:00

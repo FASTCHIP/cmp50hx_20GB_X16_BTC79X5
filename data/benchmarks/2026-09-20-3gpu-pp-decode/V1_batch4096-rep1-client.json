@@ -1,0 +1,1 @@
+{"label": "V1_batch4096", "rep": 1, "started_epoch": 1789932385.5217412, "elapsed_s": 369.158, "usage": {"completion_tokens": 512, "prompt_tokens": 128069, "total_tokens": 128581, "prompt_tokens_details": {"cached_tokens": 0}}, "finish_reason": "length", "content_len": 512}
