@@ -11,6 +11,17 @@ risk — flashing a BIOS can brick a board. Always back up your current flash fi
 — the complete step-by-step recipe (firmware → Ubuntu → driver → Gen2 → P2P verification),
 validated 2026-09-16.
 
+## Update 2026-10-13: five CMP cards boot with 384 GiB MMIOH
+
+[Заметка, проверка и ограничения](docs/mmioh384-five-cmp.md) ·
+[384 GiB firmware](firmware/rebar-xve-tu102-v2-mmioh384g.rom) ·
+[Reproducible patch](firmware/apply_mmioh384.py)
+
+Verified cold boot: **4×20 GiB + 1×10 GiB CMP**, all five with **32 GiB BAR1**.
+Five 20 GiB cards and sustained five-GPU workloads are not yet validated.
+The public ROM uses the previously published base, not the host's private SPI dump;
+its patched PEI module matches the flashed module byte-for-byte. Read the note before flashing.
+
 ## Hardware
 
 - Board: BTC79X5 / X79ETH03 (Intel H61 chipset, single LGA2011 Xeon E5).
@@ -25,7 +36,8 @@ validated 2026-09-16.
 | 16 GiB BAR1 per card | `rebar-xve-tu102-v2.rom` (XVE pre-pass DXE driver) |
 | 32 GiB BAR1 per card | same firmware + `XveBar1Selector=9` |
 | 128 GiB MMIOH | Setup EFI var (no reflash) — fits 2× 32 GiB |
-| 256 GiB MMIOH | 1-byte code patch (`rebar-xve-tu102-v2-mmioh256g.rom`) — fits 4× 32 GiB; **what the production host runs** |
+| 256 GiB MMIOH | 1-byte code patch (`rebar-xve-tu102-v2-mmioh256g.rom`) — previous configuration, four 32 GiB BAR1 windows |
+| 384 GiB MMIOH | `rebar-xve-tu102-v2-mmioh384g.rom` — current test host, five 32 GiB BAR1 windows verified; see update above |
 | PCIe Gen2 x8 | pre-driver rescan (`cmp50hx-gen2-rescan`) + deferred retrain (`cmp50hx-gen2`) |
 | BAR1 P2P | aikitoria fork (built-in HAL routing + `p2pOverride=0x11`; no source patches) + static BAR1 + `RMForceStaticBar1=1` + `iommu=pt` — **verified 2.47 GB/s bidirectional, 0 mismatch** |
 
