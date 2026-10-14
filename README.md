@@ -48,6 +48,16 @@ Synthetic wins don't guarantee inference wins. On the actual Qwen3.8-27B workloa
 compute-bound on the CMP 50HX (TU102, no tensor cores), so the PCIe link was never the
 bottleneck. Full before/after benchmark and methodology: [docs/BENCH-QWEN38.md](docs/BENCH-QWEN38.md).
 
+### 3-GPU PP/decode trade-off
+
+A separate long-context, three-GPU matrix (3 repeats per variant; 128K prompt → 512 tokens)
+measured the tensor-vs-layer trade-off on the current 3× CMP 50HX serving stack. Tensor split
+remains the decode profile at **357.16 PP / 53.78 decode tok/s**. Layer split reaches
+**523.60 PP tok/s (+46.60%)**, but decode falls to **43.67 tok/s (-18.80%)**. The only safe
+runtime knob found, `-ub 1024`, improves PP only **1.15%**. Full method, all raw 15-run
+records, exact variants and restoration verification:
+[docs/BENCH-3GPU-PP-DECODE-2026-09-20.md](docs/BENCH-3GPU-PP-DECODE-2026-09-20.md).
+
 ## The path from scratch
 
 The full recipe is [docs/SETUP-ubuntu-24.04.md](docs/SETUP-ubuntu-24.04.md). Short version:

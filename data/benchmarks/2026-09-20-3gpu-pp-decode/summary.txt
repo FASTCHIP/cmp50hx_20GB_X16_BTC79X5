@@ -1,0 +1,6 @@
+rows= 15
+B0_explicit-defaults n= 3 pp_median= 357.16 decode_median= 53.78 wall_median_s= 382.7
+V1_batch4096 n= 3 pp_median= 358.49 decode_median= 53.82 wall_median_s= 381.69
+V2_ubatch1024 n= 3 pp_median= 361.28 decode_median= 53.86 wall_median_s= 379.06
+V3_threads_batch10 n= 3 pp_median= 357.04 decode_median= 53.9 wall_median_s= 382.95
+V4_layer-split n= 3 pp_median= 523.6 decode_median= 43.67 wall_median_s= 270.62
